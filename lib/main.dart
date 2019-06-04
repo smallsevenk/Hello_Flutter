@@ -9,6 +9,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Welcome to Flutter',
+      theme: new ThemeData(
+        primaryColor: Colors.red,
+      ),
       home: new RandomWords(),
     );
   }
@@ -76,7 +79,7 @@ class RandomWordsState extends State<RandomWords> {
     );
   }
 
-  Widget _pushSaved() {
+  void _pushSaved() {
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (context) {
@@ -97,7 +100,7 @@ class RandomWordsState extends State<RandomWords> {
 
           return new Scaffold(
             appBar: new AppBar(
-              title: new Text("Saved Suggestions"),
+              title: new Text('Saved Suggestions'),
             ),
             body: new ListView(children: divided),
           );
