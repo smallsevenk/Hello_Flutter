@@ -1,6 +1,9 @@
 import 'package:english_words/english_words.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:hello_flutter/layout.dart';
+import 'package:hello_flutter/favorite.dart';
+import 'package:hello_flutter/gridview.dart';
 
 void main() => runApp(new MyApp());
 
@@ -10,9 +13,13 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Welcome to Flutter',
       theme: new ThemeData(
-        primaryColor: Colors.red,
+        primaryColor: Colors.white,
       ),
       home: new RandomWords(),
+      routes: <String, WidgetBuilder>{
+        'layout': (BuildContext context) => Layout(),
+        'gridview': (BuildContext context) => GridViweTest(),
+      },
     );
   }
 }
@@ -31,16 +38,60 @@ class RandomWordsState extends State<RandomWords> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Z6ListTest"),
+        title: new Text(
+          "Z6ListTest",
+          style: new TextStyle(color: Colors.red),
+        ),
         actions: <Widget>[
           new IconButton(
             icon: new Icon(Icons.list),
             onPressed: _pushSaved,
           ),
+          new PopupMenuButton(
+            itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+                  PopupMenuItem<String>(
+                      child: Text('My Favorite'), value: 'favoriteWordPair'),
+                  PopupMenuItem<String>(
+                      child: Text('在Flutter中构建布局'), value: 'layout'),
+                  PopupMenuItem<String>(
+                      child: Text('GridView'), value: 'gridview'),
+                ],
+            onSelected: (String action) {
+              switch (action) {
+                case "favoriteWordPair":
+                  _btnPress();
+                  break;
+                case "layout":
+                  Navigator.of(context).pushNamed('layout');
+                  break;
+                case "gridview":
+                  Navigator.of(context).pushNamed('gridview');
+                  break;
+              }
+            },
+            onCanceled: () {
+              print('canceled!');
+            },
+          ),
         ],
       ),
       body: _buildSuggestions(),
     );
+  }
+
+  Future _btnPress() {
+    Future future = Navigator.push(context, PageRouteBuilder(pageBuilder:
+        (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
+      return Favorite("Fav", _saved.toList());
+    }));
+    future.then((value) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text('前面返回的数据是:$value'),
+              ));
+    });
   }
 
   Widget _buildSuggestions() {
@@ -100,7 +151,9 @@ class RandomWordsState extends State<RandomWords> {
 
           return new Scaffold(
             appBar: new AppBar(
-              title: new Text('Saved Suggestions'),
+              title: new Text(
+                'Saved Suggestions',
+              ),
             ),
             body: new ListView(children: divided),
           );
