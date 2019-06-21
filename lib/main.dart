@@ -1,9 +1,15 @@
 import 'package:english_words/english_words.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:hello_flutter/dart/map.dart';
 import 'package:hello_flutter/layout.dart';
 import 'package:hello_flutter/favorite.dart';
 import 'package:hello_flutter/gridview.dart';
+import 'Widgets/grid_view.dart';
+import 'package:hello_flutter/stack.dart';
+import 'widgets/shopping/ShoppingList.dart';
+import 'widgets/ChangeWidget.dart';
+import 'widgets/async.dart';
 
 void main() => runApp(new MyApp());
 
@@ -19,6 +25,8 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         'layout': (BuildContext context) => Layout(),
         'gridview': (BuildContext context) => GridViweTest(),
+        'stack': (BuildContext context) => StackTest(),
+        'Shopping': (BuildContext context) => ShoppingList(),
       },
     );
   }
@@ -55,6 +63,25 @@ class RandomWordsState extends State<RandomWords> {
                       child: Text('在Flutter中构建布局'), value: 'layout'),
                   PopupMenuItem<String>(
                       child: Text('GridView'), value: 'gridview'),
+                  PopupMenuItem<String>(
+                    child: Text('Stack'),
+                    value: 'stack',
+                  ),
+                  PopupMenuItem<String>(
+                    child: Text('Shopping'),
+                    value: 'Shopping',
+                  ),
+                  PopupMenuItem<String>(
+                      child: Text('ChangeWidget'), value: 'ChangeWidget'),
+                  PopupMenuItem<String>(child: Text('Async'), value: 'Async'),
+                  PopupMenuItem<String>(
+                    child: Text('map'),
+                    value: 'map',
+                  ),
+                  PopupMenuItem<String>(
+                    child: Text('gdview'),
+                    value: 'gdview',
+                  ),
                 ],
             onSelected: (String action) {
               switch (action) {
@@ -67,6 +94,28 @@ class RandomWordsState extends State<RandomWords> {
                 case "gridview":
                   Navigator.of(context).pushNamed('gridview');
                   break;
+                case "stack":
+                  Navigator.of(context).pushNamed('stack');
+                  break;
+                case "Shopping":
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ShoppingList()));
+                  break;
+                case "ChangeWidget":
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ChangeWidget()));
+                  break;
+                case 'Async':
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AsyncTest()));
+                  break;
+                case 'map':
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MapTest()));
+                  break;
+                case 'gdview':
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => GridViewT()));
               }
             },
             onCanceled: () {
