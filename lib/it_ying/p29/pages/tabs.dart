@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'tabs/home.dart';
 import 'tabs/category.dart';
@@ -11,13 +12,42 @@ class Tabs extends StatefulWidget {
 
 class _TabsState extends State<Tabs> {
   int _currentIndex = 0;
+
   List<Widget> _widgets = [HomePage(), CategoryPage(), PersonPage()];
+
+  AppBar _getAppBar(int idx) {
+    switch (idx) {
+      case 1:
+        {
+          return null;
+        }
+        break;
+      default:
+        {
+          return AppBar(title: Text(_bottomItems[idx]['title']));
+        }
+        break;
+    }
+  }
+
+  //配置底部导航
+  List<Map> _bottomItems = [
+    {'title': '首页', 'icon': Icons.home},
+    {'title': '分类', 'icon': Icons.category},
+    {'title': '我的', 'icon': Icons.person},
+  ];
+
+  List<BottomNavigationBarItem> _getBottomItems() {
+    return this._bottomItems.map((itemInfo) {
+      return BottomNavigationBarItem(
+          title: Text(itemInfo['title']), icon: Icon(itemInfo['icon']));
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('导航'),
-      ),
+      appBar: _getAppBar(this._currentIndex),
       body: _widgets[this._currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: this._currentIndex,
@@ -26,20 +56,7 @@ class _TabsState extends State<Tabs> {
             this._currentIndex = idx;
           });
         },
-        items: [
-          BottomNavigationBarItem(
-            title: Text('首页'),
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            title: Text('分类'),
-            icon: Icon(Icons.category),
-          ),
-          BottomNavigationBarItem(
-            title: Text('我的'),
-            icon: Icon(Icons.person),
-          ),
-        ],
+        items: _getBottomItems(),
       ),
     );
   }

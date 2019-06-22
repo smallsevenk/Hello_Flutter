@@ -4,6 +4,7 @@ import '../home/search.dart';
 import '../home/form.dart';
 import '../user/login.dart';
 import '../user/regist_tel.dart';
+import '../home/products.dart';
 
 final routes = {
   '/': (context, {arguments}) => Tabs(),
@@ -12,6 +13,7 @@ final routes = {
   '/form': (context, {arguments}) => FormPage(),
   '/login': (context) => LoginPage(),
   '/regist_tel': (context) => RegistTelPage(),
+  '/products': (context) => ProductsPage(),
 };
 
 var onGenerateRoute = (RouteSettings settings) {

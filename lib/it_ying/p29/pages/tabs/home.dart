@@ -13,6 +13,7 @@ class _HomePageState extends State<HomePage> {
     '带值跳转到搜索页-pushNamed',
     'form',
     '用户登录',
+    '商品列表'
   ];
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,11 @@ class _HomePageState extends State<HomePage> {
                       case 3:
                         {
                           Navigator.pushNamed(context, '/login');
+                        }
+                        break;
+                      case 4:
+                        {
+                          Navigator.pushNamed(context, '/products');
                         }
                         break;
                       default:

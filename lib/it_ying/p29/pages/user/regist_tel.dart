@@ -5,9 +5,6 @@ class RegistTelPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('注册'),
-      ),
       body: Container(
         child: RaisedButton(
           child: Text('完成'),

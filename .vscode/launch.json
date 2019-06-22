@@ -9,7 +9,7 @@
             "type": "dart",
             "request": "launch",
             // "program": "lib/main.dart"
-            "program": "lib/it_ying/p29/bottom_navigationbar.dart"
+            "program": "lib/it_ying/p29/p29.dart"
         },
         {
             "name": "Flutter",
