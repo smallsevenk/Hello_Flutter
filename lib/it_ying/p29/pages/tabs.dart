@@ -15,13 +15,50 @@ class _TabsState extends State<Tabs> {
 
   List<Widget> _widgets = [HomePage(), CategoryPage(), PersonPage()];
   List<List> drawers = [
-    [Text('激活会员'), Icons.home],
-    [Text('我的相册'), Icons.photo],
-    [Text('安全中心'), Icons.search],
+    [
+      Text(
+        '激活会员',
+        style: TextStyle(fontSize: 16, color: Colors.blue),
+      ),
+      Icons.home
+    ],
+    [
+      Text(
+        '我的相册',
+        style: TextStyle(fontSize: 16, color: Colors.blue),
+      ),
+      Icons.photo
+    ],
+    [
+      Text(
+        '安全中心',
+        style: TextStyle(fontSize: 16, color: Colors.blue),
+      ),
+      Icons.settings
+    ],
   ];
 
   AppBar _getAppBar(int idx) {
     switch (idx) {
+      case 0:
+        {
+          return AppBar(
+            leading: Builder(
+              builder: (BuildContext context) {
+                return IconButton(
+                  icon: const Icon(Icons.person),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  tooltip:
+                      MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              },
+            ),
+            title: Text(_bottomItems[idx]['title']),
+          );
+        }
+        break;
       case 1:
         {
           return null;
@@ -38,16 +75,46 @@ class _TabsState extends State<Tabs> {
   Drawer _getDrawer(int idx) {
     if (idx == 0) {
       return Drawer(
-        child: ListView(
-          children: ListTile.divideTiles(
-            context: context,
-            tiles: this.drawers.map((drawer) {
-              return ListTile(
-                title: drawer[0],
-                leading: Icon(drawer[1]),
-              );
-            }),
-          ).toList(),
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: UserAccountsDrawerHeader(
+                    currentAccountPicture: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          'https://www.itying.com/images/flutter/1.png'),
+                    ),
+                    accountName: Text('你好,Fullter'),
+                    accountEmail: Text('smallsevenk@vip.qq.com'),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              'https://www.itying.com/images/flutter/2.png'),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Column(
+              children: ListTile.divideTiles(
+                context: context,
+                tiles: this.drawers.map((drawer) {
+                  return ListTile(
+                    title: drawer[0],
+                    leading: CircleAvatar(
+                      child: Icon(drawer[1]),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.pushNamed(context, '/products');
+                    },
+                  );
+                }),
+              ).toList(),
+            )
+          ],
         ),
       );
     } else {
@@ -74,7 +141,30 @@ class _TabsState extends State<Tabs> {
     return Scaffold(
       appBar: _getAppBar(this._currentIndex),
       body: _widgets[this._currentIndex],
+      floatingActionButton: Container(
+        width: 80,
+        height: 80,
+        padding: EdgeInsets.all(8),
+        margin: EdgeInsets.only(top: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40),
+          color: Colors.white,
+        ),
+        child: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            setState(() {
+              this._currentIndex = 1;
+            });
+          },
+          backgroundColor: _currentIndex == 1 ? Colors.blue : Colors.grey,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
+        iconSize: 36,
+        fixedColor: Colors.blue,
+        type: BottomNavigationBarType.fixed,
         currentIndex: this._currentIndex,
         onTap: (int idx) {
           setState(() {

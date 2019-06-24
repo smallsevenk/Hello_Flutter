@@ -27,6 +27,9 @@ dependencies:
   image_test_utils: ^1.0.0
    # 弹吐司
   fluttertoast: ^2.0.3
+  date_format: ^1.0.6
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
