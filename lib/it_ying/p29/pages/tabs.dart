@@ -14,6 +14,11 @@ class _TabsState extends State<Tabs> {
   int _currentIndex = 0;
 
   List<Widget> _widgets = [HomePage(), CategoryPage(), PersonPage()];
+  List<List> drawers = [
+    [Text('激活会员'), Icons.home],
+    [Text('我的相册'), Icons.photo],
+    [Text('安全中心'), Icons.search],
+  ];
 
   AppBar _getAppBar(int idx) {
     switch (idx) {
@@ -27,6 +32,26 @@ class _TabsState extends State<Tabs> {
           return AppBar(title: Text(_bottomItems[idx]['title']));
         }
         break;
+    }
+  }
+
+  Drawer _getDrawer(int idx) {
+    if (idx == 0) {
+      return Drawer(
+        child: ListView(
+          children: ListTile.divideTiles(
+            context: context,
+            tiles: this.drawers.map((drawer) {
+              return ListTile(
+                title: drawer[0],
+                leading: Icon(drawer[1]),
+              );
+            }),
+          ).toList(),
+        ),
+      );
+    } else {
+      return null;
     }
   }
 
@@ -58,6 +83,7 @@ class _TabsState extends State<Tabs> {
         },
         items: _getBottomItems(),
       ),
+      drawer: _getDrawer(this._currentIndex),
     );
   }
 }
